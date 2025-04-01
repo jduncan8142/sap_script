@@ -169,3 +169,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# User-specific stuff
+private/
+.env
+sap_script.egg-info/
+.vscode/
+.pytest_cache/
