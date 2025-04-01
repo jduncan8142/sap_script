@@ -231,10 +231,7 @@ class Table(GuiElement):
         Returns:
             A list of column titles as strings
         """
-        columns = []
-        for i in self._element.ColumnOrder:
-            columns.append(self._element.GetColumnTitles(i))
-        return columns
+        return [self._element.GetDisplayedColumnTitle(i) for i in self._element.ColumnOrder]
 
     def scroll_to_row(self, row: int) -> None:
         """
@@ -329,6 +326,41 @@ class Table(GuiElement):
         """
         for row_index in range(self.rows_count):
             yield TableRow(self, row_index)
+
+    def get_header_widths(self) -> list[dict[str, int]]:
+        """
+        Returns the widths of each column header
+
+        Returns:
+            List of widths for each column header
+        """
+        return [{c: self._element.GetCellWidth(0, c)} for c in self.column_order]
+
+    def get_table_width(self) -> int:
+        """
+        Returns the total width of the table
+        """
+        column_widths: list = []
+        for x in self.get_header_widths():
+            column_widths.extend(x.values())
+        return sum(column_widths) + len(column_widths) - 1
+
+    def pprint(self) -> None:
+        """
+        Pretty prints the table data with headers and rows
+
+        Example:
+            ```python
+            table.pprint()
+            ```
+        """
+        headers = self.get_column_titles()
+        print(" | ".join(headers))
+        print("-" * self.get_table_width())
+        row_data: list[dict] = [self.get_row_data(i) for i in range(self.rows_count)]
+        for row in row_data:
+            print(" | ".join([str(v) for _, v in row.items()]))
+        print("-" * self.get_table_width())
 
 
 class TableRow:
