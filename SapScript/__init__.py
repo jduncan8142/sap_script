@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from Core.sap import SAP  # noqa: F401
-from .Gui.vkeys import VKeys  # noqa: F401
-from .Utils.systems import Systems  # noqa: F401
+from SapScript.Core.sap import SAP  # noqa: F401
+from SapScript.Gui.vkeys import VKeys  # noqa: F401
+from SapScript.Utils.systems import Systems  # noqa: F401
 import sys
 
 #: The release version
